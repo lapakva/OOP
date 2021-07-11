@@ -247,6 +247,12 @@ bool operator== (Fraction left, Fraction rigth)
 			left.get_denominator() == rigth.get_denominator());
 }
 
+bool operator!=(Fraction left, Fraction rigth)
+{
+	return !(left == rigth);
+
+}
+
 int  euclideanGcd(int a, int b) {
 	int t;
 	while (b != 0)
@@ -340,6 +346,7 @@ void main()
 	B.reduce();
 	B.print();
 	cout << endl << (A == B) << endl;
+	cout << endl << (A != B) << endl;
 	/*operator type()
 	{
 		..........
