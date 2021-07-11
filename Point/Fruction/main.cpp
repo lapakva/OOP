@@ -252,6 +252,15 @@ bool operator!=(Fraction left, Fraction rigth)
 	return !(left == rigth);
 
 }
+bool operator>(Fraction left, Fraction rigth)
+{
+	left.to_improper();
+	rigth.to_improper();
+
+
+	return  (double)left.get_numerator() / left.get_denominator() > (double)rigth.get_numerator() / rigth.get_denominator();
+
+}
 
 int  euclideanGcd(int a, int b) {
 	int t;
@@ -334,19 +343,19 @@ void main()
 	//int b;
 	//b = (int)B;
 
-	int a = 3;
+	/*int a = 3;
 	int b = 6;
-	cout << euclideanGcd(6, 3);
+	cout << euclideanGcd(6, 3);*/
 	Fraction A = Fraction(2, 6, 12);
 	A.print();
 	A.reduce();
 	A.print();
-	Fraction B = Fraction (2, 6, 12);
+	Fraction B = Fraction (2, 7, 12);
 	B.print();
 	B.reduce();
 	B.print();
-	cout << endl << (A == B) << endl;
-	cout << endl << (A != B) << endl;
+	cout << endl << "(A == B): " << (A == B) << endl;
+	cout << endl << "(A > B): " << (A > B) << endl;
 	/*operator type()
 	{
 		..........
