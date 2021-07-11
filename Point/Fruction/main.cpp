@@ -230,6 +230,23 @@ Fraction operator+(Fraction left, Fraction rigth)
 		left.get_denominator() * rigth.get_denominator()
 	).to_proper();
 }
+
+
+
+bool operator== (Fraction left, Fraction rigth)
+{
+	left.to_proper();
+	rigth.to_proper();
+	left.reduce();
+	rigth.reduce();
+
+
+	return 
+		(left.get_integer() == rigth.get_integer() &&
+			left.get_numerator() == rigth.get_numerator() &&
+			left.get_denominator() == rigth.get_denominator());
+}
+
 int  euclideanGcd(int a, int b) {
 	int t;
 	while (b != 0)
@@ -318,6 +335,11 @@ void main()
 	A.print();
 	A.reduce();
 	A.print();
+	Fraction B = Fraction (2, 6, 12);
+	B.print();
+	B.reduce();
+	B.print();
+	cout << endl << (A == B) << endl;
 	/*operator type()
 	{
 		..........
