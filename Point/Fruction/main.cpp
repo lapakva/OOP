@@ -1,14 +1,22 @@
+# define _CRT_SECURE_NO_WARNINGS//for strtok
 #include <iostream>
 using namespace std;
 
 //#define constructors_check
 //#define increment_check
 //#define arichmetical_operators_check
-//#define TYPE_CONVERSIONS_HOME_WORK
+#define TYPE_CONVERSIONS_HOME_WORK
+//#define COMPERISON_OPERATORS
+//#define OUTPUT_CHECK
+//#define IMPUT_CHECK
 
 class Fraction;
 Fraction operator*(Fraction left, Fraction right);
+bool operator==(const Fraction& left, const Fraction& rigth);
+bool operator>(const Fraction& left, const Fraction& rigth);
+
 int  euclideanGcd(int a, int b);
+
 class Fraction
 {
 
@@ -58,6 +66,14 @@ public:
 		this->numerator = 0;
 		this->denominator = 1;
 		cout << "1argConstructor:\t" << this << endl;
+	}
+	Fraction(double decimal)
+	{
+		integer = decimal;
+		decimal -= integer;
+		denominator = 1e+9;
+		numerator = decimal *denominator;
+		reduce();
 	}
 
 	Fraction( int numerator, int denominator)
@@ -129,10 +145,16 @@ public:
 	}
 
 	// type cast operator
-	explicit operator int()
+	explicit operator int()const
 	{
 		return integer;
 	}
+
+	explicit operator double()const
+	{
+		return integer + (double) numerator / denominator;
+	}
+
 
 	//        Methods
 	Fraction& to_improper()
@@ -233,34 +255,105 @@ Fraction operator+(Fraction left, Fraction rigth)
 
 
 
-bool operator== (Fraction left, Fraction rigth)
+//bool operator==(Fraction left, Fraction rigth)
+//{
+//	left.to_proper();
+//	rigth.to_proper();
+//	left.reduce();
+//	rigth.reduce();
+//
+//
+//	return 
+//		(left.get_integer() == rigth.get_integer() &&
+//			left.get_numerator() == rigth.get_numerator() &&
+//			left.get_denominator() == rigth.get_denominator());
+//}
+
+
+
+bool operator==(const Fraction& left, const Fraction& right)
 {
-	left.to_proper();
-	rigth.to_proper();
-	left.reduce();
-	rigth.reduce();
-
-
-	return 
-		(left.get_integer() == rigth.get_integer() &&
-			left.get_numerator() == rigth.get_numerator() &&
-			left.get_denominator() == rigth.get_denominator());
+	return (double)left == (double) right;
 }
 
-bool operator!=(Fraction left, Fraction rigth)
+bool operator!=(const Fraction& left, const Fraction& right)
 {
-	return !(left == rigth);
+	return !(left == right);
+}
+bool operator>(const Fraction& left, const Fraction& right)
+{
+	//left.to_improper();
+	//rigth.to_improper();
+
+
+	//return  (double)left.get_numerator() / left.get_denominator() > (double)rigth.get_numerator() / rigth.get_denominator();
+	//return (double)left > (double)right;
+	return (double) left > (double) right;
 
 }
-bool operator>(Fraction left, Fraction rigth)
+
+bool operator<(const Fraction& left, const Fraction& right)
 {
-	left.to_improper();
-	rigth.to_improper();
-
-
-	return  (double)left.get_numerator() / left.get_denominator() > (double)rigth.get_numerator() / rigth.get_denominator();
-
+	return (double)left < (double)right;
 }
+
+bool operator>=(const Fraction& left, const Fraction& right)
+{
+	//return  (left > right)||(left == right);
+	return  !(left < right);
+}
+
+
+bool operator<=(const Fraction& left, const Fraction& right)
+{
+	//return  (left > right)||(left == right);
+	return  !(left > right);
+}
+ostream& operator<<(ostream& os, const Fraction& obj)
+{
+	if (obj.get_integer()) os << obj.get_integer();
+	if (obj.get_integer() && obj.get_numerator()) os << "(";
+	if (obj.get_numerator()) os << obj.get_numerator() << "/" << obj.get_denominator();
+	if (obj.get_integer() && obj.get_numerator()) os << ")";
+	if (obj.get_integer() == 0 && obj.get_numerator() == 0) os << 0;
+	return os;
+}
+
+istream& operator>>(istream& is,  Fraction& obj)
+{
+	//int integer, numerator, denominator;
+	//is >> integer >> numerator >> denominator;
+	//obj.set_integer(integer);
+	//obj.set_numerator (numerator);
+	//obj.set_denominator(denominator);
+	const int n = 32;
+	char buffer[n] = {};
+	char delimeters[] = "(/) +";
+	char* number[5] = {};
+	cin.getline(buffer, n);
+	int i = 0;
+	
+		for (char* pch = strtok(buffer, delimeters); pch; pch = strtok(NULL, delimeters), i++)
+		{
+			number[i] = pch;
+		}
+		switch (i)
+		{
+		case 1: obj.set_integer(atoi(number[0])); break;
+		case 2: obj.set_numerator(atoi(number[0]));
+			obj.set_denominator(atoi(number[1]));
+			break;
+		case 3: 
+			obj.set_integer(atoi(number[0]));
+			obj.set_numerator(atoi(number[1]));
+			obj.set_denominator(atoi(number[2]));
+			break;
+		default: cout << "Error: " << endl;
+
+		}
+	return is;
+}
+
 
 int  euclideanGcd(int a, int b) {
 	int t;
@@ -325,6 +418,8 @@ void main()
 	//A.to_proper();
 	//A.print();
 
+#ifdef COMPERISON_OPERATORS
+
 	//Fraction A(2, 3, 4);
 	//Fraction B(3, 4, 5); 
 	//A *=  B;// implicit operator call
@@ -346,7 +441,7 @@ void main()
 	/*int a = 3;
 	int b = 6;
 	cout << euclideanGcd(6, 3);*/
-	Fraction A = Fraction(2, 6, 12);
+	/*Fraction A = Fraction(2, 6, 12);
 	A.print();
 	A.reduce();
 	A.print();
@@ -355,20 +450,37 @@ void main()
 	B.reduce();
 	B.print();
 	cout << endl << "(A == B): " << (A == B) << endl;
-	cout << endl << "(A > B): " << (A > B) << endl;
+	cout << endl << "(A != B): " << (A != B) << endl;
+	cout << endl << "(A > B): " << (A > B) << endl;*/
 	/*operator type()
 	{
 		..........
 		..........
 	}*/
+
+#endif // COMPERISON_OPERATORS
+
+#ifdef OUTPUT_CHECK
+	Fraction A(2, 3);
+	cout << A << endl;
+
+#endif // OUTPUT_CHECK
+
+#ifdef IMPUT_CHECK
+	Fraction A;
+	cin >> A; 
+	cout << A << endl;
+
+#endif // IMPUT_CHECK
+
 #ifdef TYPE_CONVERSIONS_HOME_WORK
 	//Task1
 	Fraction A(2, 3, 4);
-	double a = A;
+	double a = (double) A;
 	cout << a << endl;
 
 	//Task2
-	double b = 3.14;
+	double b = 2.75;
 	Fraction B = b;
 	B.print();
 #endif // TYPE_CONVERSIONS_HOME_WORK
