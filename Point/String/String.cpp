@@ -14,15 +14,24 @@ public:
 
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
+	String(const char& word)
+	{
+		str = new char[max];
+		*str = word;
+
+	}
 
 	~String()
 	{
 		delete[] str;
-		str = nullptr;
+	
 	}
-	String* operator=(char* word)
+
+	String& operator=(char* word)
 	{
-		str = word;
+		auto length = std::strlen(str) + 1;
+		for (int i = 0; i < length; i++) str[i] = word[i];
+		
 	
 		cout << "CopyAssignment:\t" << this << endl;
 
