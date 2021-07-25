@@ -20,6 +20,14 @@ public:
 		delete[] str;
 		str = nullptr;
 	}
+	String* operator=(char* word)
+	{
+		str = word;
+	
+		cout << "CopyAssignment:\t" << this << endl;
+
+		return this;
+	}
 
 
 };
