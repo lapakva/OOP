@@ -14,9 +14,8 @@ public:
 
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	String(const char& word)
+	explicit String(const char& word)
 	{
-		str = new char[max];
 		*str = word;
 
 	}
@@ -27,7 +26,7 @@ public:
 	
 	}
 
-	String& operator=(char* word)
+	String* operator=(char* word)
 	{
 		auto length = std::strlen(str) + 1;
 		for (int i = 0; i < length; i++) str[i] = word[i];
