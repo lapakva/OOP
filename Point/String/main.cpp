@@ -26,25 +26,26 @@ public:
 		return str;
 	}
 
-	explicit String(unsigned int size = 80)
+	explicit String(unsigned int size = 80) :size(size), str(new char[size
+] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};
+		//this->size = size;
+		//this->str = new char[size] {};
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	String(const char* str)
+	String(const char* str):size(strlen(str)+1), str(new char[size] {})
 	{
 		//while (str[size++]);
-		this->size = strlen(str) + 1;// strlen считает размер в символах
-		this->str = new char[size] {};
+		//this->size = strlen(str) + 1;// strlen считает размер в символах
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++) this->str[i] = str[i];
 		cout << "1argConstructor: \t" << this << endl;
 
 	}
-	String(const String& other)
+	String(const String& other):size(other.size), str(new char[size] {})
 	{
-		this->size = other.size;
-		this->str = new char[size] {};
+		/*this->size = other.size;
+		this->str = new char[size] {};*/
 		for (int i = 0; i < size; i++) this->str[i] = other.str[i];
 		cout << "CopyConstructor:\t" << this << endl;
 	}
