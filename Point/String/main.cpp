@@ -3,6 +3,8 @@
 using namespace std;
 //#define constructors_check
 
+///////////////////Class Declaration///////////////////
+
 class String;
 String operator+(const String& left, const String& right);
 
@@ -12,89 +14,116 @@ class String
 	char* str; // pointer to  string in dinamic memory
 
 public:
-	unsigned int get_size()const
-	{
-		return size;
-	}
+	unsigned int get_size()const;
 
-	const  char* get_str()const
-	{
-		return str;
-	}
-	char* get_str()
-	{
-		return str;
-	}
+	const  char* get_str()const;
+	char* get_str();
 
-	explicit String(unsigned int size = 80) :size(size), str(new char[size
-] {})
-	{
-		//this->size = size;
-		//this->str = new char[size] {};
-		cout << "DefaultConstructor:\t" << this << endl;
-	}
-	String(const char* str):String(strlen(str)+1)//Делегируем выделение памяти первому конструктору
-	{
-		//while (str[size++]);
-		//this->size = strlen(str) + 1;// strlen считает размер в символах
-		//this->str = new char[size] {};
-		for (int i = 0; i < size; i++) this->str[i] = str[i];
-		cout << "1argConstructor: \t" << this << endl;
-
-	}
-	String(const String& other):String(other.str)
-	{
-		/*this->size = other.size;
-		this->str = new char[size] {};*/
-		//for (int i = 0; i < size; i++) this->str[i] = other.str[i];
-		cout << "CopyConstructor:\t" << this << endl;
-	}
-
-	~String()
-	{
-		delete[] this->str; // указатель на указатель, [] говорить что удалить нужно масив
-		//delet[] str;
-		cout << "Destructor:\t" << this << endl;
-	}
+	explicit String(unsigned int size = 80);
+	String(const char* str);
+	String(const String& other);
+	~String();
 
 	//Operators
-	String& operator=(const String& other)
-	{
-		//0) Проверяем является ли принятый обект нашем же объектом
-		if (this == &other)return *this;
-		//1) Удаляем старое значение обекта, освобождаем занимаему им память
-		delete[] this->str;
-		//2) выполняем deep copy;
-		this->size = other.size;
-		this->str = new char[size] {};
-		for (int i = 0; i < size; i++) this->str[i] = other.str[i];
-		cout << "CopyAssignment:\t" << this << endl;
-		return *this;
-	}
+	String& operator=(const String& other);
 
-	String& operator+=(const String& other)
-	{
-		return *this = *this + other;
-	}
-	const char& operator[](unsigned int i)const // i - index
-	{
-		return str[i];
-	}
-	char& operator[](unsigned int i) // i - index
-	{
-		return str[i];
-	}
+	String& operator+=(const String& other);
+	const char& operator[](unsigned int i)const;
+	char& operator[](unsigned int i);
 
 	
 
 	//Methods
 
-	void print()const
-	{
-		cout << "Size:\t" << size << endl;
-		cout << "Str:\t" << str << endl;
-	}
+	void print()const;
 };
+/////////////////////////////////////////////////
+
+
+
+///////Class Defenition//////////////////////
+unsigned int String::get_size()const
+{
+	return size;
+}
+
+const  char* String::get_str()const
+{
+	return str;
+}
+char* String::get_str()
+{
+	return str;
+}
+
+ String::String(unsigned int size) :size(size), str(new char[size
+] {})
+{
+	//this->size = size;
+	//this->str = new char[size] {};
+	cout << "DefaultConstructor:\t" << this << endl;
+}
+String::String(const char* str) :String(strlen(str) + 1)//Делегируем выделение памяти первому конструктору
+{
+	//while (str[size++]);
+	//this->size = strlen(str) + 1;// strlen считает размер в символах
+	//this->str = new char[size] {};
+	for (int i = 0; i < size; i++) this->str[i] = str[i];
+	cout << "1argConstructor: \t" << this << endl;
+
+}
+String::String(const String& other) :String(other.str)
+{
+	/*this->size = other.size;
+	this->str = new char[size] {};*/
+	//for (int i = 0; i < size; i++) this->str[i] = other.str[i];
+	cout << "CopyConstructor:\t" << this << endl;
+}
+
+String::~String()
+{
+	delete[] this->str; // указатель на указатель, [] говорить что удалить нужно масив
+	//delet[] str;
+	cout << "Destructor:\t" << this << endl;
+}
+
+//Operators
+String& String::operator=(const String& other)
+{
+	//0) Проверяем является ли принятый обект нашем же объектом
+	if (this == &other)return *this;
+	//1) Удаляем старое значение обекта, освобождаем занимаему им память
+	delete[] this->str;
+	//2) выполняем deep copy;
+	this->size = other.size;
+	this->str = new char[size] {};
+	for (int i = 0; i < size; i++) this->str[i] = other.str[i];
+	cout << "CopyAssignment:\t" << this << endl;
+	return *this;
+}
+
+String& String::operator+=(const String& other)
+{
+	return *this = *this + other;
+}
+const char& String::operator[](unsigned int i)const // i - index
+{
+	return str[i];
+}
+char& String::operator[](unsigned int i) // i - index
+{
+	return str[i];
+}
+
+
+
+//Methods
+
+void String::print()const
+{
+	cout << "Size:\t" << size << endl;
+	cout << "Str:\t" << str << endl;
+}
 
 ostream& operator<<(ostream& os, const String& obj)
 {
