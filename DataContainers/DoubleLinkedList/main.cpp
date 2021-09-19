@@ -138,6 +138,44 @@ public:
 		delete to_del;
 		size--;
 	}
+	void insert(int Data, int index)
+	{
+		Element *New = new Element(Data);
+		
+		int i = 0;
+		if (index==0)return push_front(Data);
+		if (index>=size) return push_back(Data);
+		if (size/2>=index){
+			Element *Temp = Tail;
+			while (Temp->pNext)
+				{ if (i == index - 1)						
+						{New->pPriv = Temp->pPriv;
+						Temp->pPriv = New;
+						break;}
+					i++;
+					Temp = Temp->pPriv;
+				}
+		}
+		else
+		{
+		Element *Temp = Head;
+		while (Temp->pNext)
+		{
+			 if (i == index - 1)
+			{
+				New->pNext = Temp->pNext;
+				Temp->pNext = New;
+				break;
+			}
+			i++;
+			Temp = Temp->pNext;
+		}
+
+		}
+
+		size++;
+
+	}
 
 		//					Methods:
 	void print() const
@@ -175,10 +213,12 @@ DoubleList list = {3,5,8,13,21};
 // list.pop_back();
 // list.pop_back();
 
-DoubleList list2 = list;
-list2.print();
+// DoubleList list2 = list;
+// list2.print();
 
-DoubleList list3;
-list3 = list2;
+// DoubleList list3;
+// list3 = list2;
+list.insert(123,2);
+list.print();
  return 0;
 }
