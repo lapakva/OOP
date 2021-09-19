@@ -40,20 +40,20 @@ public:
 		cout << "LConstructor:\t" << this << endl;
 	}
 
-	// ForwardList(const initializer_list<int>& il):ForwardList()
-	// {
-	// 		cout<<"Type: "<< typeid(il.begin()).name()<< endl;
-	// 		for (int const* it = il.begin(); it != il.end(); it++)
-	// 		{
-	// 			this->push_back(*it);
-	// 		}
-	//}
-	// ForwardList(const ForwardList& other):ForwardList()
-	// {
-	// 	for(Element* Temp  = other.Head; Temp; Temp =Temp->pNext)
-	// 		push_back(Temp->Data);
+	DoubleList(const initializer_list<int>& il):DoubleList()
+	{
+			cout<<"Type: "<< typeid(il.begin()).name()<< endl;
+			for (int const* it = il.begin(); it != il.end(); it++)
+			{
+				this->push_back(*it);
+			}
+	}
+	DoubleList(const DoubleList& other):DoubleList()
+	{
+		for(Element* Temp  = other.Head; Temp; Temp =Temp->pNext)
+			push_back(Temp->Data);
 
-	// }
+	}
 
 	~DoubleList()
 	{
@@ -124,7 +124,8 @@ public:
 		
 		Element* to_del = Tail;
 		Tail = Tail->pPriv;
-		Tail->pNext = nullptr;
+		if (size==1){Head=nullptr;}
+		else{ Tail->pNext = nullptr;}	
 		delete to_del;
 		size--;
 	}
@@ -144,20 +145,28 @@ public:
 int main()
 {
  //Element e (4);
- DoubleList list;
+ //DoubleList list;
 //push_front
-int n;
+// int n;
 
-cout<<" Enter numeber of elements in the DoubleList: ";cin>>n;
-cout << endl;
-for (int i = 0; i < n; i++)
-{
-	//list.push_front(rand() % 100);
-	list.push_back(rand() % 100);
-}
-list.print();
-list.pop_front();
-list.print();
+// cout<<" Enter numeber of elements in the DoubleList: ";cin>>n;
+// cout << endl;
+// for (int i = 0; i < n; i++)
+// {
+// 	//list.push_front(rand() % 100);
+// 	list.push_back(rand() % 100);
+// }
+DoubleList list = {3,5,8,13,21};
+// list.print();
+// list.print();
+// list.pop_front();
+// list.print();
+// list.pop_back();
+// list.pop_back();
+// list.pop_back();
+// list.pop_back();
 
+DoubleList list2 = list;
+list2.print();
  return 0;
 }
