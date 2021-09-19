@@ -57,15 +57,7 @@ public:
 
 	~DoubleList()
 	{
-		//  while (Head) pop_front();
-		// Element *Temp = Head;
-
-		// while (!Temp)
-		// {
-		// 	Element *p = Temp;
-		// 	Temp = Temp->pNext;
-		// 	delete p;
-		// }
+		while (Head) pop_front();
 		cout << "LDestructor:\t" << this << endl;
 	}
 
@@ -110,6 +102,33 @@ public:
 		}
 		size++;
 	}
+
+	       //Removing elements
+	void pop_front()
+	{
+		cout << " Element to front pop: " << Head->Data << endl;
+		//remember address of element to delet
+		
+		Element* to_del = Head;
+		Head = Head->pNext;
+		if (size==1){Tail = nullptr;}
+		else {Head->pPriv = nullptr;}
+		delete to_del;
+		size--;
+
+	}
+	void pop_back()
+	{
+		cout << " Element to pop back: " << Tail->Data << endl;
+		//remember address of element to delet
+		
+		Element* to_del = Tail;
+		Tail = Tail->pPriv;
+		Tail->pNext = nullptr;
+		delete to_del;
+		size--;
+	}
+
 		//					Methods:
 	void print() const
 	{
@@ -136,6 +155,8 @@ for (int i = 0; i < n; i++)
 	//list.push_front(rand() % 100);
 	list.push_back(rand() % 100);
 }
+list.print();
+list.pop_front();
 list.print();
 
  return 0;
