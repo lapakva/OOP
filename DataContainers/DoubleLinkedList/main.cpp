@@ -61,6 +61,15 @@ public:
 		cout << "LDestructor:\t" << this << endl;
 	}
 
+		//Operators:
+	DoubleList& operator=(const DoubleList& other)
+	{
+		while (Head) pop_front();
+		for(Element* Temp  = other.Head; Temp; Temp =Temp->pNext)
+			push_back(Temp->Data);
+		return *this;
+	}
+
     	//						Adding elements:
 	void push_front(int Data)
 	{
@@ -168,5 +177,8 @@ DoubleList list = {3,5,8,13,21};
 
 DoubleList list2 = list;
 list2.print();
+
+DoubleList list3;
+list3 = list2;
  return 0;
 }
