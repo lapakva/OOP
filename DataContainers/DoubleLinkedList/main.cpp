@@ -75,9 +75,6 @@ public:
 		if (size==0)
 		{
 			Element *New = new Element(Data);
-			New->pNext = Head;
-        	New->pPriv =nullptr;
-
 			Head = New;
         	Tail = New;
 		}
@@ -93,15 +90,30 @@ public:
 		}
 		size++;
 	}
+
+	void push_back(int Data)
+	{
+		if (size==0)
+		{
+			Element *New = new Element(Data);
+			Head = New;
+        	Tail = New;
+		}
+		else
+		{ 
+			Element *New = new Element(Data);
+			New->pPriv = Tail; 
+			Tail->pNext = New;
+			Tail = New;
+        	// Head does not change
+
+		}
+		size++;
+	}
 		//					Methods:
 	void print() const
 	{
 		Element *Temp = Head;
-		// while (Temp != nullptr)
-		// {
-		// 	cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
-		// 	Temp = Temp->pNext;
-		// }
 		for(Element* Temp=Head; Temp!=nullptr; Temp=Temp->pNext)
 		{ cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext<< 
 		 ' ' << Temp->pPriv << endl;}
@@ -121,8 +133,8 @@ cout<<" Enter numeber of elements in the DoubleList: ";cin>>n;
 cout << endl;
 for (int i = 0; i < n; i++)
 {
-	list.push_front(rand() % 100);
-	//list.push_back(rand() % 100);
+	//list.push_front(rand() % 100);
+	list.push_back(rand() % 100);
 }
 list.print();
 
