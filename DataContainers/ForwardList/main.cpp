@@ -37,6 +37,52 @@ class ForwardList
 	size_t size;
 
 public:
+	class Iterator
+	{
+	Element* Temp;
+	public:
+	Iterator(Element* Temp = nullptr):Temp(Temp)
+	{
+		cout<<"ItConstructor:\t"<< this <<endl;
+	}
+	~Iterator()
+	{
+		cout<<"ItDestructor:\t"<< this <<endl;
+	}
+	Iterator& operator++()
+	{
+		Temp =Temp->pNext;
+		return *this;
+	}
+	Iterator operator++(int)
+	{
+		Iterator old = *this;
+		Temp =Temp->pNext;
+		return old;
+	}
+	bool operator==(const Iterator& other)
+	{
+		return this->Temp == other.Temp;
+	}
+
+	bool operator!=(const Iterator& other)
+	{
+		return this->Temp != other.Temp;
+	}
+	int& operator*()
+	{
+		return Temp->Data;
+	} 
+	};
+	Iterator  begin()
+	{
+		return this->Head;
+	}
+	Iterator end()
+	{
+		return nullptr;
+	}
+
 	ForwardList()
 	{
 		Head = nullptr;
@@ -226,11 +272,12 @@ int main()
 #endif //base_check
 
 ForwardList list = {3,5,8,13,21};
-list.print();
-ForwardList list2 = list;
-list2.print();
-ForwardList list3;
-list3 = list2;
-list3.print();
+for (int i: list){cout<<i<<"\t";}
+// list.print();
+// ForwardList list2 = list;
+// list2.print();
+// ForwardList list3;
+// list3 = list2;
+// list3.print();
 	return 0;
 }
