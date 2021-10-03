@@ -1,16 +1,17 @@
 #include<iostream>
 using namespace std;
 #define DEBUG
-//#define inerators_check
+#define inerators_check
+template<typename T>
 class List
 {
     class Element
     { 
-        int Data;
+        T Data;
         Element* pNext;
         Element* pPrev;
     public:
-        Element(int Data, Element *pNext = nullptr, Element *pPrev = nullptr)
+        Element(T Data, Element *pNext = nullptr, Element *pPrev = nullptr)
             : Data(Data), pNext(pNext), pPrev(pPrev)
             {
                 cout << "EConstructor:\t" << this << endl;
@@ -84,12 +85,12 @@ List()
     cout << "LConstructor:\t"<< this << endl;
 
 }
-List (const initializer_list<int>& il):List()
+List (const initializer_list<T>& il):List()
 {
-    for (int const* it = il.begin(); it!= il.end();it++)
+    for (T const* it = il.begin(); it!= il.end();it++)
     push_back(*it);
 }
-List(const List& other): List()
+List(const List<T>& other): List()
 {
     for (Element* Temp = other.Head; Temp; Temp=Temp->pNext)
     push_back(Temp->Data);
@@ -99,7 +100,7 @@ List(const List& other): List()
     while (Head) pop_back();
     cout<<"LDestructor:\t" << this << endl;
 }
-	List& operator=(const List& other)
+	List<T>& operator=(const List<T>& other)
 	{
 		if (this==&other)return *this;
         while (Head) pop_front();
@@ -108,7 +109,7 @@ List(const List& other): List()
 	}
 
     // Adding elements
-    void push_front(int Data)
+    void push_front(T Data)
     {
         if (Head == nullptr && Tail == nullptr)
         {Head =Tail =new Element(Data);}
@@ -125,7 +126,7 @@ List(const List& other): List()
         size ++;
 
     }
-        void push_back(int Data)
+        void push_back(T Data)
     {
         if (!Head && !Tail) return push_front(Data);
         // Element* New = new Element(Data);
@@ -208,14 +209,14 @@ int main()
 // 	list.push_back(rand() % 100);
 // }
 #ifdef inerators_check
-List list ={3,5,8,13, 21};
+List<int> list ={3,5,8,13, 21};
     list.print();
     list.revers_print();
-    List list2 =list;
+    List<int> list2 =list;
     list = list;
-    List list3;
+    List<int> list3;
     list3 = list;
-    for(List::Iterator it = list2.begin(); it !=list2.end(); it++)
+    for(List<int>::Iterator it = list2.begin(); it !=list2.end(); it++)
     {
         cout<<*it<<"\t";
     }
